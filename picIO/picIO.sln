@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "picIO", "picIO\picIO.vcxproj", "{F67FE319-706E-4A0D-8661-8B95B015F1BF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F67FE319-706E-4A0D-8661-8B95B015F1BF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F67FE319-706E-4A0D-8661-8B95B015F1BF}.Debug|Win32.Build.0 = Debug|Win32
+		{F67FE319-706E-4A0D-8661-8B95B015F1BF}.Release|Win32.ActiveCfg = Release|Win32
+		{F67FE319-706E-4A0D-8661-8B95B015F1BF}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
