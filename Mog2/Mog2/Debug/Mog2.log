@@ -1,0 +1,113 @@
+﻿Build started 2015/8/26 16:18:43.
+     1>Project "F:\git\BackgroundSubtraction\Mog2\Mog2\Mog2.vcxproj" on node 2 (rebuild target(s)).
+     1>_PrepareForClean:
+         Deleting file "Debug\Mog2.lastbuildstate".
+       InitializeBuildStatus:
+         Touching "Debug\Mog2.unsuccessfulbuild".
+       ClCompile:
+         c:\software\study\VS2010\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"StdAfx.h" /Fp"Debug\Mog2.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
+         stdafx.cpp
+         c:\software\study\VS2010\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\Mog2.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt BackgroundSubtractorMOG2.cpp Mog2.cpp
+         Mog2.cpp
+         BackgroundSubtractorMOG2.cpp
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(490): error C2065: 'frameSize' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(491): error C2065: 'frameType' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(493): error C2065: 'nframes' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(494): error C2065: 'history' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(495): error C2065: 'varThreshold' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(496): error C2065: 'bShadowDetection' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(498): error C2065: 'nmixtures' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(499): error C2065: 'backgroundRatio' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(500): error C2065: 'fVarInit' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(501): error C2065: 'fVarMax' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(502): error C2065: 'fVarMin' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(504): error C2065: 'varThresholdGen' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(505): error C2065: 'fCT' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(506): error C2065: 'nShadowDetection' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(507): error C2065: 'fTau' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(512): error C2065: 'frameSize' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(513): error C2065: 'frameType' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(515): error C2065: 'nframes' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(516): error C2065: 'history' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(517): error C2065: 'varThreshold' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(518): error C2065: 'bShadowDetection' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(520): error C2065: 'nmixtures' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(521): error C2065: 'backgroundRatio' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(522): error C2065: 'fVarInit' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(523): error C2065: 'fVarMax' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(524): error C2065: 'fVarMin' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(526): error C2065: 'varThresholdGen' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(527): error C2065: 'fCT' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(528): error C2065: 'nShadowDetection' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(529): error C2065: 'fTau' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(539): error C2065: 'frameSize' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(540): error C2065: 'frameType' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(541): error C2065: 'nframes' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(543): error C2065: 'frameType' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(550): error C2065: 'bgmodel' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(550): error C2228: left of '.create' must have class/struct/union
+                 type is ''unknown-type''
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(550): error C2065: 'frameSize' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(550): error C2228: left of '.height' must have class/struct/union
+                 type is ''unknown-type''
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(550): error C2065: 'frameSize' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(550): error C2228: left of '.width' must have class/struct/union
+                 type is ''unknown-type''
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(550): error C2065: 'nmixtures' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(552): error C2065: 'bgmodelUsedModes' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(552): error C2228: left of '.create' must have class/struct/union
+                 type is ''unknown-type''
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(552): error C2065: 'frameSize' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(553): error C2065: 'bgmodelUsedModes' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(559): error C2065: 'nframes' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(559): error C2065: 'frameSize' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(559): error C2065: 'frameType' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(567): error C2065: 'nframes' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(568): error C2065: 'nframes' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(568): error C2065: 'nframes' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(568): error C2065: 'history' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(573): error C2065: 'bgmodel' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(573): error C2228: left of '.data' must have class/struct/union
+                 type is ''unknown-type''
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(574): error C2065: 'bgmodel' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(574): error C2228: left of '.data' must have class/struct/union
+                 type is ''unknown-type''
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(574): error C2065: 'nmixtures' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(575): error C2065: 'bgmodelUsedModes' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(575): error C2228: left of '.data' must have class/struct/union
+                 type is ''unknown-type''
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(575): error C2065: 'nmixtures' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(576): error C2065: 'varThreshold' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(577): error C2065: 'backgroundRatio' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(577): error C2065: 'varThresholdGen' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(578): error C2065: 'fVarInit' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(578): error C2065: 'fVarMin' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(578): error C2065: 'fVarMax' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(578): error C2065: 'fCT' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(578): error C2065: 'fTau' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(579): error C2065: 'bShadowDetection' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(579): error C2065: 'nShadowDetection' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(584): error C2065: 'frameType' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(586): error C2065: 'frameSize' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(589): error C2065: 'bgmodel' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(589): error C2228: left of '.data' must have class/struct/union
+                 type is ''unknown-type''
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(590): error C2065: 'frameSize' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(590): error C2228: left of '.width' must have class/struct/union
+                 type is ''unknown-type''
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(590): error C2065: 'frameSize' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(590): error C2228: left of '.height' must have class/struct/union
+                 type is ''unknown-type''
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(590): error C2065: 'nmixtures' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(595): error C2065: 'bgmodelUsedModes' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(595): error C2228: left of '.at' must have class/struct/union
+                 type is ''unknown-type''
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(604): error C2065: 'backgroundRatio' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(610): error C2065: 'nmixtures' : undeclared identifier
+     1>f:\git\backgroundsubtraction\mog2\mog2\backgroundsubtractormog2.cpp(614): error C2065: 'frameType' : undeclared identifier
+         Generating Code...
+     1>Done Building Project "F:\git\BackgroundSubtraction\Mog2\Mog2\Mog2.vcxproj" (rebuild target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.52

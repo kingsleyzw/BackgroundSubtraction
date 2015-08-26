@@ -80,11 +80,11 @@ void split(std::string& s, std::string& delim,std::vector< std::string >* ret)
 	}
 }
 int main(int argc, const char** argv) {
-	/*if(argc<2)
+	if(argc<2)
 		return 1;
-	const char* file = argv[1];*/
+	const char* file = argv[1];
 
-	char file[] = "F:\\video\\CDnet2014\\baseline\\baseline\\PETS2006\\input\\*.jpg";
+	//char file[] = "F:\\video\\CDnet2014\\badWeather\\badWeather\\skating\\input\\*.jpg";
 	vector<string> vec = FindAllFile(file,true);
 	vector<string>::iterator iter = vec.begin();
 	string strPicNameOutput = file;
@@ -124,20 +124,23 @@ int main(int argc, const char** argv) {
 	//********************************************************************
 	while(iter != vec.end()){
 		sprintf(picName,strPicNameOutput.c_str(),num);
-		cout<<num<<"  "<<picName<<endl;
+		cout<<num<<"  "<<*iter<<endl;
 		num++;
 		frame = cvLoadImage((*iter++).c_str(),0);
 		if(frame == NULL)
 			break;
 		//********************************************************************
+		oCurrInputFrame = cv::Mat(frame);
         oBGSAlg(oCurrInputFrame,oCurrSegmMask,100.0/*,double(k<=100)*/); // lower rate in the early frames helps bootstrap the model when foreground is present
         oBGSAlg.getBackgroundImage(oCurrReconstrBGImg);
-        imshow("input",oCurrInputFrame);
-        imshow("segmentation mask",oCurrSegmMask);
-        imshow("reconstructed background",oCurrReconstrBGImg);
-		//writeImageFg = &oCurrSegmMask.operator IplImage();
+		/*imshow("input",oCurrInputFrame);
+		imshow("segmentation mask",oCurrSegmMask);
+		imshow("reconstructed background",oCurrReconstrBGImg);*/
+		writeImageFg = &oCurrSegmMask.operator IplImage();
 		//********************************************************************
-		//cvSaveImage(picName,writeImageFg);
+		cvSaveImage(picName,writeImageFg);
+		if(frame)
+			cvReleaseImage(&frame);
 		cvWaitKey(1);
 	}
 	if(frame)

@@ -1,0 +1,19 @@
+﻿Build started 2015/8/26 16:40:50.
+     1>Project "F:\git\BackgroundSubtraction\并行计算\并行计算\并行计算.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Touching "Debug\并行计算.unsuccessfulbuild".
+       ClCompile:
+         All outputs are up-to-date.
+         c:\software\study\VS2010\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\并行计算.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt "并行计算.cpp"
+         并行计算.cpp
+     1>f:\git\backgroundsubtraction\并行计算\并行计算\test.hpp(71): error C2039: 'parallelTestInvoker' : is not a member of 'cv::test'
+     1>f:\git\backgroundsubtraction\并行计算\并行计算\test.hpp(71): error C2146: syntax error : missing ';' before identifier 'parallelTestInvoker'
+     1>f:\git\backgroundsubtraction\并行计算\并行计算\test.hpp(71): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>f:\git\backgroundsubtraction\并行计算\并行计算\test.hpp(71): warning C4091: '' : ignored on left of 'int' when no variable is declared
+     1>f:\git\backgroundsubtraction\并行计算\并行计算\test.hpp(72): error C2440: '<function-style-cast>' : cannot convert from 'cv::Mat' to 'parallelTestInvoker'
+                 No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+     1>Done Building Project "F:\git\BackgroundSubtraction\并行计算\并行计算\并行计算.vcxproj" (build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.56

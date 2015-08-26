@@ -325,7 +325,10 @@ void BackgroundSubtractorSuBSENSE::operator()(cv::InputArray _image, cv::OutputA
 			float* pfCurrMeanFinalSegmRes_ST = ((float*)(m_oMeanFinalSegmResFrame_ST.data+nFloatIter));
 			ushort& nLastIntraDesc = *((ushort*)(m_oLastDescFrame.data+nDescIter));
 			uchar& nLastColor = m_oLastColorFrame.data[nPxIter];
+
+			//Tcolor = (T(x) * colorMax - (!ustablemask)*(colormax/5))/2
 			const size_t nCurrColorDistThreshold = (size_t)(((*pfCurrDistThresholdFactor)*m_nMinColorDistThreshold)-((!m_oUnstableRegionMask.data[nPxIter])*STAB_COLOR_DIST_OFFSET))/2;
+			//Tlbsp = 
 			const size_t nCurrDescDistThreshold = ((size_t)1<<((size_t)floor(*pfCurrDistThresholdFactor+0.5f)))+m_nDescDistThresholdOffset+(m_oUnstableRegionMask.data[nPxIter]*UNSTAB_DESC_DIST_OFFSET);
 			ushort nCurrInterDesc, nCurrIntraDesc;
 			LBSP::computeGrayscaleDescriptor(oInputImg,nCurrColor,nCurrImgCoord_X,nCurrImgCoord_Y,m_anLBSPThreshold_8bitLUT[nCurrColor],nCurrIntraDesc);
@@ -366,6 +369,7 @@ void BackgroundSubtractorSuBSENSE::operator()(cv::InputArray _image, cv::OutputA
 				*pfCurrMeanRawSegmRes_LT = (*pfCurrMeanRawSegmRes_LT)*(1.0f-fRollAvgFactor_LT) + fRollAvgFactor_LT;
 				*pfCurrMeanRawSegmRes_ST = (*pfCurrMeanRawSegmRes_ST)*(1.0f-fRollAvgFactor_ST) + fRollAvgFactor_ST;
 				oCurrFGMask.data[nPxIter] = UCHAR_MAX;
+
 				if(m_nModelResetCooldown && (rand()%(size_t)FEEDBACK_T_LOWER)==0) {
 					const size_t s_rand = rand()%m_nBGSamples;
 					*((ushort*)(m_voBGDescSamples[s_rand].data+nDescIter)) = nCurrIntraDesc;
@@ -407,17 +411,20 @@ void BackgroundSubtractorSuBSENSE::operator()(cv::InputArray _image, cv::OutputA
 				}
 			}
 
-			//**********************反馈
+			//**********************反馈**********************************
+			//**********************反馈:公式11   T(x):pfCurrLearningRate
 			if(m_oLastFGMask.data[nPxIter] || (std::min(*pfCurrMeanMinDist_LT,*pfCurrMeanMinDist_ST)<UNSTABLE_REG_RATIO_MIN && oCurrFGMask.data[nPxIter])) {
 				if((*pfCurrLearningRate)<m_fCurrLearningRateUpperCap)
 					*pfCurrLearningRate += FEEDBACK_T_INCR/(std::max(*pfCurrMeanMinDist_LT,*pfCurrMeanMinDist_ST)*(*pfCurrVariationFactor));
 			}
 			else if((*pfCurrLearningRate)>m_fCurrLearningRateLowerCap)
 				*pfCurrLearningRate -= FEEDBACK_T_DECR*(*pfCurrVariationFactor)/std::max(*pfCurrMeanMinDist_LT,*pfCurrMeanMinDist_ST);
+			//**********************反馈：  Tlower <= Tx <=Tupper  
 			if((*pfCurrLearningRate)<m_fCurrLearningRateLowerCap)
 				*pfCurrLearningRate = m_fCurrLearningRateLowerCap;
 			else if((*pfCurrLearningRate)>m_fCurrLearningRateUpperCap)
 				*pfCurrLearningRate = m_fCurrLearningRateUpperCap;
+			//**********************反馈:公式7 :V(x):pfCurrVariationFactor
 			if(std::max(*pfCurrMeanMinDist_LT,*pfCurrMeanMinDist_ST)>UNSTABLE_REG_RATIO_MIN && m_oBlinksFrame.data[nPxIter])
 				(*pfCurrVariationFactor) += FEEDBACK_V_INCR;
 			else if((*pfCurrVariationFactor)>FEEDBACK_V_DECR) {
@@ -425,6 +432,7 @@ void BackgroundSubtractorSuBSENSE::operator()(cv::InputArray _image, cv::OutputA
 				if((*pfCurrVariationFactor)<FEEDBACK_V_DECR)
 					(*pfCurrVariationFactor) = FEEDBACK_V_DECR;
 			}
+			//**********************反馈：公式8   R(x):pfCurrDistThresholdFactor
 			if((*pfCurrDistThresholdFactor)<std::pow(1.0f+std::min(*pfCurrMeanMinDist_LT,*pfCurrMeanMinDist_ST)*2,2))
 				(*pfCurrDistThresholdFactor) += FEEDBACK_R_VAR*(*pfCurrVariationFactor-FEEDBACK_V_DECR);
 			else {
@@ -631,23 +639,31 @@ void BackgroundSubtractorSuBSENSE::operator()(cv::InputArray _image, cv::OutputA
 	cv::imshow("t(x)",oUpdateRateFrameNormalized);
 	std::cout << std::fixed << std::setprecision(5) << "      t(" << dbgpt << ") = " << m_oUpdateRateFrame.at<float>(dbgpt) << std::endl;
 #endif //DISPLAY_SUBSENSE_DEBUG_INFO
-	cv::bitwise_xor(oCurrFGMask,m_oLastRawFGMask,m_oCurrRawFGBlinkMask);
-	cv::bitwise_or(m_oCurrRawFGBlinkMask,m_oLastRawFGBlinkMask,m_oBlinksFrame);
+	//blink 点检测
+	cv::bitwise_xor(oCurrFGMask,m_oLastRawFGMask,m_oCurrRawFGBlinkMask);   //rawBlink = XOR(lastMask,currMask)
+	cv::bitwise_or(m_oCurrRawFGBlinkMask,m_oLastRawFGBlinkMask,m_oBlinksFrame);    //blinkFrame = OR(rawBlink,lastRawblink)
 	m_oCurrRawFGBlinkMask.copyTo(m_oLastRawFGBlinkMask);
 	oCurrFGMask.copyTo(m_oLastRawFGMask);
+
+	//形态学处理
 	cv::morphologyEx(oCurrFGMask,m_oFGMask_PreFlood,cv::MORPH_CLOSE,cv::Mat());
 	m_oFGMask_PreFlood.copyTo(m_oFGMask_FloodedHoles);
+	//洪泛填充
 	cv::floodFill(m_oFGMask_FloodedHoles,cv::Point(0,0),UCHAR_MAX);
 	cv::bitwise_not(m_oFGMask_FloodedHoles,m_oFGMask_FloodedHoles);
+	//腐蚀
 	cv::erode(m_oFGMask_PreFlood,m_oFGMask_PreFlood,cv::Mat(),cv::Point(-1,-1),3);
 	cv::bitwise_or(oCurrFGMask,m_oFGMask_FloodedHoles,oCurrFGMask);
 	cv::bitwise_or(oCurrFGMask,m_oFGMask_PreFlood,oCurrFGMask);
+	//中值滤波
 	cv::medianBlur(oCurrFGMask,m_oLastFGMask,m_nMedianBlurKernelSize);
+	//膨胀
 	cv::dilate(m_oLastFGMask,m_oLastFGMask_dilated,cv::Mat(),cv::Point(-1,-1),3);
 	cv::bitwise_and(m_oBlinksFrame,m_oLastFGMask_dilated_inverted,m_oBlinksFrame);
 	cv::bitwise_not(m_oLastFGMask_dilated,m_oLastFGMask_dilated_inverted);
 	cv::bitwise_and(m_oBlinksFrame,m_oLastFGMask_dilated_inverted,m_oBlinksFrame);
 	m_oLastFGMask.copyTo(oCurrFGMask);
+
 	cv::addWeighted(m_oMeanFinalSegmResFrame_LT,(1.0f-fRollAvgFactor_LT),m_oLastFGMask,(1.0/UCHAR_MAX)*fRollAvgFactor_LT,0,m_oMeanFinalSegmResFrame_LT,CV_32F);
 	cv::addWeighted(m_oMeanFinalSegmResFrame_ST,(1.0f-fRollAvgFactor_ST),m_oLastFGMask,(1.0/UCHAR_MAX)*fRollAvgFactor_ST,0,m_oMeanFinalSegmResFrame_ST,CV_32F);
 	const float fCurrNonZeroDescRatio = (float)nNonZeroDescCount/m_nTotRelevantPxCount;
@@ -663,14 +679,19 @@ void BackgroundSubtractorSuBSENSE::operator()(cv::InputArray _image, cv::OutputA
 	}
 	m_fLastNonZeroDescRatio = fCurrNonZeroDescRatio;
 	if(m_bLearningRateScalingEnabled) {
+		//降采样
 		cv::resize(oInputImg,m_oDownSampledFrame_MotionAnalysis,m_oDownSampledFrameSize,0,0,cv::INTER_AREA);
+		//dst_LT = dst(1-alpha_LT) + src*alpha_LT
 		cv::accumulateWeighted(m_oDownSampledFrame_MotionAnalysis,m_oMeanDownSampledLastDistFrame_LT,fRollAvgFactor_LT);
+		//dst_ST = dst(1-alpha_ST) + src*alpha_ST
 		cv::accumulateWeighted(m_oDownSampledFrame_MotionAnalysis,m_oMeanDownSampledLastDistFrame_ST,fRollAvgFactor_ST);
 		size_t nTotColorDiff = 0;
+		//nTotColorDiff = sum(dst_ST - dst_LT)
 		for(int i=0; i<m_oMeanDownSampledLastDistFrame_ST.rows; ++i) {
 			const size_t idx1 = m_oMeanDownSampledLastDistFrame_ST.step.p[0]*i;
-			for(int j=0; j<m_oMeanDownSampledLastDistFrame_ST.cols; ++j) {
-				const size_t idx2 = idx1+m_oMeanDownSampledLastDistFrame_ST.step.p[1]*j;
+			for(int j=0; j<m_oMeanDownSampledLastDistFrame_ST.cols; ++j) {         //遍历T图像
+
+				const size_t idx2 = idx1+m_oMeanDownSampledLastDistFrame_ST.step.p[1]*j;          //nTotColorDiff = (dst_ST - dst_LT)
 				nTotColorDiff += (m_nImgChannels==1)?
 					(size_t)fabs((*(float*)(m_oMeanDownSampledLastDistFrame_ST.data+idx2))-(*(float*)(m_oMeanDownSampledLastDistFrame_LT.data+idx2)))/2
 							:  //(m_nImgChannels==3)
@@ -679,11 +700,12 @@ void BackgroundSubtractorSuBSENSE::operator()(cv::InputArray _image, cv::OutputA
 										(size_t)fabs((*(float*)(m_oMeanDownSampledLastDistFrame_ST.data+idx2+8))-(*(float*)(m_oMeanDownSampledLastDistFrame_LT.data+idx2+8)))));
 			}
 		}
+		//dstDiffRatio = nTotColorDiff/size（dstDiffRatio）
 		const float fCurrColorDiffRatio = (float)nTotColorDiff/(m_oMeanDownSampledLastDistFrame_ST.rows*m_oMeanDownSampledLastDistFrame_ST.cols);
 		if(m_bAutoModelResetEnabled) {
-			if(m_nFramesSinceLastReset>1000)
+			if(m_nFramesSinceLastReset>1000)                   //如果连续1000帧都不满足重置的条件，那么需要等到下面条件2满足是才能继续开启背景重置功能
 				m_bAutoModelResetEnabled = false;
-			else if(fCurrColorDiffRatio>=FRAMELEVEL_MIN_COLOR_DIFF_THRESHOLD && m_nModelResetCooldown==0) {
+			else if(fCurrColorDiffRatio>=FRAMELEVEL_MIN_COLOR_DIFF_THRESHOLD && m_nModelResetCooldown==0) {     //dstDiffRatio>=阈值时重置 10% 的背景
 				m_nFramesSinceLastReset = 0;
 				refreshModel(0.1f); // reset 10% of the bg model
 				m_nModelResetCooldown = m_nSamplesForMovingAvgs/4;
@@ -692,7 +714,7 @@ void BackgroundSubtractorSuBSENSE::operator()(cv::InputArray _image, cv::OutputA
 			else
 				++m_nFramesSinceLastReset;
 		}
-		else if(fCurrColorDiffRatio>=FRAMELEVEL_MIN_COLOR_DIFF_THRESHOLD*2) {
+		else if(fCurrColorDiffRatio>=FRAMELEVEL_MIN_COLOR_DIFF_THRESHOLD*2) {          //条件2：dstDiffRatio > 两倍阈值
 			m_nFramesSinceLastReset = 0;
 			m_bAutoModelResetEnabled = true;
 		}
