@@ -53,8 +53,13 @@ void split(std::string& s, std::string& delim,std::vector< std::string >* ret)
 		ret->push_back(s.substr(last,index-last));
 	}
 }
-int main(){
-	char file[] = "F:\\video\\CDnet2014\\baseline\\baseline\\highway\\input\\*.jpg";
+int main(int argc,char**argv){
+	if(argc < 2){
+	cout<<"the Parametric problem"<<endl;
+	return 1;
+	}
+	char* file = argv[1];
+	//char file[] = "F:\\video\\CDnet2014\\baseline\\baseline\\highway\\input\\*.jpg";
 	vector<string> vec = FindAllFile(file,true);
 	vector<string>::iterator iter = vec.begin();
 	string strPicNameOutput = file;
@@ -70,10 +75,10 @@ int main(){
 			strPicNameOutput += "\\";
 	}
 	cout<<strPicNameOutput<<endl;
-	int frameNum = 1;
-	char picName[64] = {0};
-	strPicNameOutput = strPicNameOutput.append("bin%06d.png");
-	IplImage* frame = NULL; 
+	int num = 1,num2str;
+	char picName[128] = {0};
+	strPicNameOutput = strPicNameOutput.append("vibe_bin%06d.png");
+	IplImage* frame,*OutPutmask = NULL; 
 
 
 	//********************************************************************
@@ -86,7 +91,8 @@ int main(){
 	//clock_t start1, stop1;
 	double time1=0.0;
 	while(iter != vec.end()){
-		sprintf(picName,strPicNameOutput.c_str(),frameNum);
+		num2str = num;
+		sprintf_s(picName,strPicNameOutput.c_str(),num2str);
 		cout<<picName<<endl;
 		frame = cvLoadImage((*iter++).c_str(),1);
 		if(frame == NULL)
@@ -94,25 +100,26 @@ int main(){
 		//********************************************************************
 
 		cvCvtColor(frame,frame,CV_RGB2YUV);//与RGB相比，转化为YUV后会明显减少噪点并且减少阴影
-		if( frameNum == 1 ){
+		if( num == 1 ){
 			viBe->initialize(frame);
 			Imask= Mat(cvCreateImage( cvGetSize(frame), IPL_DEPTH_8U, 1 ));
+			OutPutmask = cvCreateImage( cvGetSize(frame), IPL_DEPTH_8U, 1);
 		}
 		Input = Mat(frame);
 		//start1 = clock();
 		viBe->update(&Input,&Imask,frame->height);
 		//stop1 = clock();
 		//time1 += (double)(stop1 - start1)/CLOCKS_PER_SEC*1000;
-		imshow("Imask",Imask);
-		cvWaitKey(1);
+		/*imshow("Imask",Imask);
+		cvWaitKey(1);*/
 	    //********************************************************************
-		//cvSaveImage(picName,frame);
+		OutPutmask = &Imask.operator IplImage();
+		cvSaveImage(picName,OutPutmask);
 		if(frame)
 			cvReleaseImage(&frame);
-		frameNum++;
+		num++;
 	}
 	//cout<<frameNum<<"  time="<<time1/frameNum<<endl;
-	
 	return 0;
 }
 
